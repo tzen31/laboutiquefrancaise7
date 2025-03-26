@@ -6,13 +6,13 @@
     <title>La Boutique Française - 100% Made in France</title>
     <meta name="description" content="La boutique spécialisée dans la fabrication Made In France">
 
-    <link rel="stylesheet" href="{{ asset('css/style.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/css/styles.css') }}">
 
-    <link href="{{ asset('css/bootstrap.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('assets/css/bootstrap.min.css') }}" rel="stylesheet">
 
     <!-- Custom styles for this template -->
-    <link href="{{ asset('css/carousel.css') }}" rel="stylesheet">
-    <link href="{{ asset('css/custom.css') }}" rel="stylesheet">
+    <link href="{{ asset('assets/css/carousel.css') }}" rel="stylesheet">
+    <link href="{{ asset('assets/css/custom.css') }}" rel="stylesheet">
     <script src="https://unpkg.com/feather-icons"></script>
 </head>
 <body>
@@ -27,7 +27,7 @@
             <div class="collapse navbar-collapse" id="navbarCollapse">
                 <ul class="navbar-nav me-auto mb-2 mb-md-0">
                     <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="#">Accueil</a>
+                        <a class="nav-link active" aria-current="page" href="{{ path('app_home') }}">Accueil</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="#">Link</a>
@@ -41,11 +41,11 @@
                 </ul>
                 <div class="speed-menu">
                     {% if app.user %}
-                        <a href="{{ path('app_account') }}"><i data-feather="user"></i>{{ app.user.firstname  }}</a>
+                        <a href="{{ path('app_account') }}"><i data-feather="user"></i> {{ app.user.firstname }}</a>
                     {% else %}
-                        <a href="{{ path('app_login') }}"><i data-feather="user"></i></a>
+                        {# <a href="{{ path('app_login') }}"><i data-feather="user"></i></a> #}
                     {% endif %}
-                    
+
                     <a href=""><i data-feather="shopping-cart"></i></a>
                 </div>
             </div>
@@ -55,26 +55,26 @@
 
 <main>
 
-<div class="container">
-    {# or without clearing the flash bag #}
-    {% for label, messages in app.flashes %}
-        {% for message in messages %}
-            <div class="alert mt-4 alert-{{ label }}">
-                {{ message }}
-            </div>
+    <div class="container">
+        {% for label, messages in app.flashes %}
+            {% for message in messages %}
+                <div class="alert mt-4 alert-{{ label }}">
+                    {{ message }}
+                </div>
+            {% endfor %}
         {% endfor %}
-    {% endfor %}
-</div>
+    </div>
 
-{% block body %}{% endblock %}
+    {% block body %}{% endblock %}
+
 
     <!-- FOOTER -->
     <footer class="container">
-        <p>&copy; 2017–2025 La Boutique Française <a href="#">CGV</a> &middot; <a href="#">CGU</a></p>
+        <p>&copy; 2017–2024 La Boutique Française <a href="#">CGV</a> &middot; <a href="#">CGU</a></p>
     </footer>
 </main>
 
-<script src="{{ asset('js/bootstrap.bundle.min.js') }}"></script>
-<script src="{{ asset('js/global.js') }}"></script>
+<script src="{{ asset('assets/js/bootstrap.bundle.min.js') }}"></script>
+<script src="{{ asset('assets/js/global.js') }}"></script>
 </body>
 </html>
