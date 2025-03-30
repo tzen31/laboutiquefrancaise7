@@ -59,17 +59,15 @@ class PasswordUserType extends AbstractType
             ->addEventListener(FormEvents::SUBMIT, function (FormEvent $event) {
                 $form = $event->getForm();
                 $user = $form->getConfig()->getOptions()['data'];
-                // $hashedPassword = $passwordHasher->hashPassword(
-                //     $user,
-                //     $plaintextPassword
-                // );
                 $passwordHasher = $form->getConfig()->getOptions()['passwordHasher'];
                 
+                //1. Récupérer le mot de passe saisi par l'utilisateur et le comparer au mdp en Bdd 
                 $isValid = $passwordHasher->isPasswordValid(
                     $user, 
                     $form->get('actualPassword')->getData()
                 );   
 
+                //2. Si c'est != envoyer une erreur
                 if (!$isValid) {
                     $form->get('actualPassword')->addError(new FormError('Votre mot de passe actuel n\'est pas conforme'));
                 }
@@ -82,6 +80,7 @@ class PasswordUserType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => User::class,
+            'passwordHasher' => null
         ]);
     }
 }

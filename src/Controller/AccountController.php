@@ -29,10 +29,15 @@ final class AccountController extends AbstractController
             'passwordHasher' => $passwordHasher
         ]);
 
-        $form->handleRequest();
+        $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()){
             $em->flush();
+            
+            $this->addFlash(
+                'success',
+                'Votre mot de passe a été correctement modifié'
+            );
         }
 
         return $this->render('account/password.html.twig', [

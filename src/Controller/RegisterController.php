@@ -20,9 +20,16 @@ final class RegisterController extends AbstractController
         $form = $this->createForm(RegisterUserType::class, $user);        
         $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()){
+        if ($form->isSubmitted() && $form->isValid()){            
             $em->persist($user);
             $em->flush();
+
+            $this->addFlash(
+                'success',
+                'Votre compte a été correctement créé'
+            );
+
+            return $this->redirecttoRoute('app_login');
         }
 
         return $this->render('register/index.html.twig', [
