@@ -1,0 +1,69 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} {{ product.name }} - La boutique Française {% endblock %}
+
+{% block body %}
+
+    <div class="row">
+        <div class="col-md-5">
+            <img src="../uploads/{{ product.illustration }}" alt="{{ product.name }}" class="img-fluid">
+        </div>
+        <div class="col-md-7 my-auto">
+            <small><i><a href="{{ path('app_category', {slug : product.category.slug}) }}">{{ product.category.name }}</a> > {{ product.name }}</i></small>
+            <h2>{{ product.name }}</h2>
+            {# <p>{{ product.subtitle }}</p> #}
+            <span class="product-page-price">{{ (product.pricewt)|price }}</span>
+            <hr>
+            <p>
+                {{ product.description|raw }}
+            </p>
+
+             <div class="d-flex align-items-center justify-content-between mt-3">
+                <a href="{{ path('app_cart_add', { id :product.id }) }}" class="btn btn-success w-10">Ajouter au panier</a>
+                {#    
+                {% if app.user %} 
+                    {% if product in app.user.wishlists %}
+                        <a class="wishlist-icon wishlist-icon-active" href="{{ path('app_account_wishlist_remove', { id: product.id }) }}" style="margin-left:10px">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="{% if product in app.user.wishlists %}red{% else %}white{% endif %}" class="bi bi-heart" viewBox="0 0 16 16">
+                                <path d="m8 2.748-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.92 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01zM8 15C-7.333 4.868 3.279-3.04 7.824 1.143q.09.083.176.171a3 3 0 0 1 .176-.17C12.72-3.042 23.333 4.867 8 15"/>
+                            </svg>
+                        </a>    
+                    {% else %}
+                        <a class="wishlist-icon" href="{{ path('app_account_wishlist_add', { id: product.id }) }}" style="margin-left:10px">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-heart" viewBox="0 0 16 16">
+                                <path d="m8 2.748-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.92 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01zM8 15C-7.333 4.868 3.279-3.04 7.824 1.143q.09.083.176.171a3 3 0 0 1 .176-.17C12.72-3.042 23.333 4.867 8 15"/>
+                            </svg>
+                        </a>  
+                    {% endif %}
+                {% else %}
+                    <a data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample" style="margin-left:10px">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="white" class="bi bi-heart" viewBox="0 0 16 16">
+                            <path d="m8 2.748-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.92 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01zM8 15C-7.333 4.868 3.279-3.04 7.824 1.143q.09.083.176.171a3 3 0 0 1 .176-.17C12.72-3.042 23.333 4.867 8 15"/>
+                        </svg>
+                    </a>            
+                {% endif %} 
+                #}
+            </div>  
+            {#  
+            <div class="collapse" id="collapseExample">
+                <div class="mt-2">
+                    Pour utiliser les avantages de la wishlist, <a href="{{ path('app_login') }}">connectez-vous</a> ou <a href="{{ path('app_register') }}">créer votre compte</a> client.
+                </div>
+            </div> 
+            #}
+
+        </div>
+    </div>
+    <hr>
+    <h3>Nos meilleures ventes</h3>
+    <p>Découvrez les articles les plus vendus</p>
+    <div class="row">
+        {# {% for product in products %}
+            <div class="col-md-3">
+                {% include 'product/single_product.html.twig' %}
+            </div>
+        {% endfor %} #}
+    </div>
+
+
+{% endblock %}
