@@ -3,7 +3,9 @@
 namespace App\Controller\Admin;
 
 use App\Entity\User;
+use App\Entity\Order;
 use App\Entity\Header;
+use App\Entity\Carrier;
 use App\Entity\Product;
 use App\Entity\Category;
 use Symfony\Component\HttpFoundation\Response;
@@ -20,7 +22,6 @@ class DashboardController extends AbstractDashboardController
     {     
         $adminUrlGenerator = $this->container->get(AdminUrlGenerator::class);
         return $this->redirect($adminUrlGenerator->setController(UserCrudController::class)->generateUrl());
-
     }
 
     public function configureDashboard(): Dashboard
@@ -33,11 +34,10 @@ class DashboardController extends AbstractDashboardController
     {
         yield MenuItem::linkToDashboard('Dashboard', 'fa fa-home');
         yield MenuItem::linkToCrud('Utilisateurs', 'fa fa-user', User::class);
-        // yield MenuItem::linkToCrud('Commandes', 'fa fa-shopping-cart', Order::class);
+        yield MenuItem::linkToCrud('Commandes', 'fa fa-shopping-cart', Order::class);
         yield MenuItem::linkToCrud('Categories', 'fa fa-list', Category::class);
         yield MenuItem::linkToCrud('Produits', 'fa fa-tag', Product::class);
-        // yield MenuItem::linkToCrud('Transporteurs', 'fa fa-truck', Carrier::class);
-        yield MenuItem::linkToCrud('Headers', 'fa fa-desktop', Header::class);
-    
+        yield MenuItem::linkToCrud('Transporteurs', 'fa fa-truck', Carrier::class);
+        yield MenuItem::linkToCrud('Headers', 'fa fa-desktop', Header::class);    
     }
 }

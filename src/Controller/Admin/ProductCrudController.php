@@ -38,7 +38,7 @@ class ProductCrudController extends AbstractCrudController
 
         return [
             TextField::new('name')->setLabel('Nom')->setHelp('Nom de votre produit'),
-            BooleanField::new('isBest')->setLabel('Produit à la une')->setHelp('Afficher un produit sur la HomePage'),
+            BooleanField::new('isHomepage')->setLabel('Produit à la une')->setHelp('Afficher un produit sur la HomePage'),
             
             SlugField::new('slug')
                      ->setTargetFieldName('name')->setLabel('URL')->setHelp('URLde votre produit'),
@@ -60,8 +60,8 @@ class ProductCrudController extends AbstractCrudController
                         '20%' => '20',
                       ]),                
             AssociationField::new('category','Catégorie associé'),       
-            TextField::new('subtitle')->setLabel('Sous-titre'),            
-            //BooleanField::new('isBest')->setLabel('Top vente')
+            //TextField::new('subtitle')->setLabel('Sous-titre'),            
+            //BooleanField::new('isHomepage')->setLabel('Top vente')
             
         ];
     }

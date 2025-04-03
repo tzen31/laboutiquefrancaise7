@@ -35,6 +35,9 @@ class Product
     #[ORM\ManyToOne(inversedBy: 'products')]
     private ?Category $category = null;
 
+    #[ORM\Column(nullable: true)]
+    private ?bool $isHomepage = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -128,5 +131,17 @@ class Product
     {
         $coeff = 1 + ($this->tva/100);
         return $coeff * $this->price;
+    }
+
+    public function isHomepage(): ?bool
+    {
+        return $this->isHomepage;
+    }
+
+    public function setIsHomepage(?bool $isHomepage): static
+    {
+        $this->isHomepage = $isHomepage;
+
+        return $this;
     }
 }

@@ -3,10 +3,11 @@
 namespace App\Controller\Admin;
 
 use App\Entity\Header;
-use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
-use EasyCorp\Bundle\EasyAdminBundle\Field\ImageField;
-use EasyCorp\Bundle\EasyAdminBundle\Field\TextareaField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\ImageField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\BooleanField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\TextareaField;
+use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 
 class HeaderCrudController extends AbstractCrudController
 {
@@ -25,6 +26,7 @@ class HeaderCrudController extends AbstractCrudController
 
         return [
             TextField::new('title','Titre du header'),
+            BooleanField::new('isHomepage')->setLabel('Produit à la une')->setHelp("Vous permet d'afficher un produit sur la homepage"),
             TextareaField::new('content','Contenu de notre header'),
             TextField::new('button_title', 'Titre du bouton'),
             TextField::new('button_link', 'URL du bouton'),

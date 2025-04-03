@@ -1,0 +1,86 @@
+{% extends '@!EasyAdmin/layout.html.twig' %}
+
+{% block main %}
+
+<h2>Agir sur la commande</h2>
+{# {% if order.state > 1 %}
+    <a href="{{ current_url }}&state=3" class="{% if order.state == 3 %} d-none{% endif %} btn btn-warning">Commande en cours de préparation</a>
+    <a href="{{ current_url }}&state=4" class="{% if order.state == 4 %} d-none{% endif %} btn btn-success">Commande expédiée</a>
+    <a href="{{ current_url }}&state=5" class="{% if order.state == 5 %} d-none{% endif %} btn btn-danger">Commande annulée</a>
+{% else %}
+    <p>Vous ne pouvez pas agir sur une commande qui n'est pas encore payée</p>
+{% endif %}
+
+<hr>
+
+<small><span><a target="_blank" href="{{ path('app_invoice_admin', { id_order: order.id }) }}" class="btn btn-light btn-sm">Voir/Imprimer la facture</a></small></span>
+
+<h3>Commande n° {{ order.id}}</h3>
+{{ include('admin/state.html.twig', { field : { 'value' : order.state} }) }}
+<br><br>
+<span>Passée le : {{ order.createdAt|date('d/m/y') }}</span><br>
+<span>Stripe Session id : {{ order.stripeSessionId }}</span><br>
+
+
+
+<div class="row my-4">
+    <div class="col-md-6">
+        <b>Adresse de livraison :</b><br>
+        {{ order.delivery|raw  }}
+    </div>
+
+    <div class="col-md-6">
+        <b>Transporteur :</b><br>
+        {{ order.carrierName  }}
+    </div>
+</div>
+
+<b>Contenu de la commande :</b>
+
+ <table class="table">
+    <thead>
+        <tr>
+            <th scope="col">Illustration</th>
+            <th scope="col">Nom du produit</th>
+            <th scope="col">Quantité</th>
+            <th scope="col">Prix unitaire H.T</th>
+            <th scope="col">TVA</th>
+            <th scope="col">Total T.T.C</th>
+        </tr>
+    </thead>
+    <tbody>
+
+        {% for product in order.orderDetails %}
+                    
+            <tr>
+                <td>
+                    <img src="/uploads/{{ product.productIllustration }}" width="100px" alt="">
+                </td>
+                <td>{{ product.productName }}</td>
+                <td>{{ product.productQuantity }}</td>
+                <td>{{ product.productPrice|price }}</td>
+                <td>{{ product.productTva }}%</td>
+                {% set coeff = 1 + (product.productTva / 100) %}
+
+                <td>{{ ((product.productPrice * coeff) * product.productQuantity)|price }}</td>
+            </tr>
+
+        {% endfor %}
+
+            <tr>
+                <td></td>
+                <td>{{ order.carrierName }}</td>
+                <td colspan='3'>1</td>
+                <td>{{ order.carrierPrice|price }}</td>
+            </tr>
+    </tbody>
+</table>
+
+ <div class="text-right fs-5">
+    <b>Total H.T : </b> {{ (order.totalWt - order.totalTva)|price }}<br/>
+    <b>Total TVA : </b> {{ order.totalTva|price }}<br/>
+    <b>Total T.T.C : </b> {{ order.totalWt|price }}
+ </div> #}
+
+
+{% endblock %}
