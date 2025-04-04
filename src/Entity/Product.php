@@ -133,7 +133,7 @@ class Product
         return $coeff * $this->price;
     }
 
-    public function isHomepage(): ?bool
+    public function getIsHomepage(): ?bool
     {
         return $this->isHomepage;
     }

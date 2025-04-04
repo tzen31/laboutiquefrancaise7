@@ -3,7 +3,8 @@
 {% block main %}
 
 <h2>Agir sur la commande</h2>
-{# {% if order.state > 1 %}
+
+{% if order.state > 1 %}
     <a href="{{ current_url }}&state=3" class="{% if order.state == 3 %} d-none{% endif %} btn btn-warning">Commande en cours de préparation</a>
     <a href="{{ current_url }}&state=4" class="{% if order.state == 4 %} d-none{% endif %} btn btn-success">Commande expédiée</a>
     <a href="{{ current_url }}&state=5" class="{% if order.state == 5 %} d-none{% endif %} btn btn-danger">Commande annulée</a>
@@ -13,13 +14,13 @@
 
 <hr>
 
-<small><span><a target="_blank" href="{{ path('app_invoice_admin', { id_order: order.id }) }}" class="btn btn-light btn-sm">Voir/Imprimer la facture</a></small></span>
+<small><a target="_blank" href="{{ path('app_invoice_admin', {id_order : order.id}) }}" class="btn btn-light btn-sm">Voir/Imprimer la facture</a></small>
 
-<h3>Commande n° {{ order.id}}</h3>
+<h3 class="mt-2">Commande n° {{ order.id}}</h3>
 {{ include('admin/state.html.twig', { field : { 'value' : order.state} }) }}
 <br><br>
 <span>Passée le : {{ order.createdAt|date('d/m/y') }}</span><br>
-<span>Stripe Session id : {{ order.stripeSessionId }}</span><br>
+{# <span>Stripe Session id : {{ order.stripeSessionId }}</span><br> #}
 
 
 
@@ -50,7 +51,7 @@
     </thead>
     <tbody>
 
-        {% for product in order.orderDetails %}
+        {% for product in order.orderDetail %}
                     
             <tr>
                 <td>
@@ -80,7 +81,7 @@
     <b>Total H.T : </b> {{ (order.totalWt - order.totalTva)|price }}<br/>
     <b>Total TVA : </b> {{ order.totalTva|price }}<br/>
     <b>Total T.T.C : </b> {{ order.totalWt|price }}
- </div> #}
+ </div>
 
 
 {% endblock %}

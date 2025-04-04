@@ -1,0 +1,9 @@
+<div class="col-lg-4">
+    <a href="{{ path('app_product', { 'slug': product.slug }) }}"><img src="/uploads/{{ product.illustration }}" alt="{{ product.name }}" class="img-fluid"></img></a>
+    <h2 class="fw-normal mt-2">{{ product.name }}</h2>
+    <div style="font-size: 14px">
+        {{ product.description|raw }}
+    </div> 
+    {# <span class="product-price">{{ (product.pricewt / 100)|number_format(2, ',') }} €</span> #}
+    <p><a class="btn btn-secondary mt-2" href="{{ path('app_product', { slug : product.slug }) }}">Découvrir</a></p> 
+</div>

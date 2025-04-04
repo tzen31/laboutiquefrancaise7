@@ -3,6 +3,9 @@
 {% block body %}
 
     <div class="container my-5">
+    <span><a href="{{ path('app_account') }}" class="btn btn-light btn-sm">Retour</a></span>
+    <small><a target="_blank" href="{{ path('app_invoice_customer', {id_order : order.id}) }}" class="btn btn-light btn-sm">Voir/Imprimer la facture</a></small>
+
         <h1>Récapitulatif de ma commande</h1>
 
         <div class="row">

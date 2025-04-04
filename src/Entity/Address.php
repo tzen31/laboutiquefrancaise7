@@ -39,7 +39,7 @@ class Address
     private ?User $user = null;
 
     public function __toString() {
-        return /*$this->getName().'[br]'.*/$this->getFirstname().' '.$this->getLastname().'<br>'.$this->getAddress().'<br>'.$this->getCity().' - '.$this->getCountry();
+        return $this->getfirstname().' '.$this->getfirstname().'<br>'.$this->getAddress().'<br>'.$this->getCity().' - '.$this->getCountry();
     }
 
     public function getId(): ?int

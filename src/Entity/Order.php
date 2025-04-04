@@ -43,7 +43,7 @@ class Order
      * @var Collection<int, OrderDetail>
      */
     #[ORM\OneToMany(targetEntity: OrderDetail::class, mappedBy: 'myOrder', cascade: ['persist'])]
-    private Collection $orderDetails;
+    private Collection $orderDetail;
 
     #[ORM\ManyToOne(inversedBy: 'orders')]
     #[ORM\JoinColumn(nullable: false)]
@@ -51,13 +51,13 @@ class Order
 
     public function __construct()
     {
-        $this->orderDetails = new ArrayCollection();
+        $this->orderDetail = new ArrayCollection();
     }
 
     public function getTotalWt()
     {
         $totalTTC = 0;
-        $products = $this->getOrderDetails();
+        $products = $this->getOrderDetail();
 
         foreach ($products as $product) {
             $coeff = 1 + ($product->getProductTva() / 100);
@@ -70,7 +70,7 @@ class Order
     public function getTotalTva()
     {
         $totalTva = 0;
-        $products = $this->getOrderDetails();
+        $products = $this->getOrderDetail();
 
         foreach ($products as $product) {
             $coeff = $product->getProductTva() / 100;
@@ -148,15 +148,15 @@ class Order
     /**
      * @return Collection<int, OrderDetail>
      */
-    public function getOrderDetails(): Collection
+    public function getOrderDetail(): Collection
     {
-        return $this->orderDetails;
+        return $this->orderDetail;
     }
 
     public function addOrderDetail(OrderDetail $orderDetail): static
     {
-        if (!$this->orderDetails->contains($orderDetail)) {
-            $this->orderDetails->add($orderDetail);
+        if (!$this->orderDetail->contains($orderDetail)) {
+            $this->orderDetail->add($orderDetail);
             $orderDetail->setMyOrder($this);
         }
 
@@ -165,7 +165,7 @@ class Order
 
     public function removeOrderDetail(OrderDetail $orderDetail): static
     {
-        if ($this->orderDetails->removeElement($orderDetail)) {
+        if ($this->orderDetail->removeElement($orderDetail)) {
             // set the owning side to null (unless already changed)
             if ($orderDetail->getMyOrder() === $this) {
                 $orderDetail->setMyOrder(null);

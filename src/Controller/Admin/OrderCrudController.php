@@ -5,12 +5,13 @@ namespace App\Controller\Admin;
 use App\Classe\Mail;
 use App\Classe\State;
 use App\Entity\Order;
+use App\Repository\OrderRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Action;
-use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
 //use EasyCorp\Bundle\EasyAdminBundle\Field\BooleanField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Actions;
 use EasyCorp\Bundle\EasyAdminBundle\Field\DateField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
@@ -18,8 +19,8 @@ use EasyCorp\Bundle\EasyAdminBundle\Field\ArrayField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\MoneyField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\ChoiceField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\NumberField;
-use EasyCorp\Bundle\EasyAdminBundle\Field\DateTimeField;
 //use EasyCorp\Bundle\EasyAdminBundle\Router\CrudUrlGenerator;  //Symfony 5
+use EasyCorp\Bundle\EasyAdminBundle\Field\DateTimeField;
 use EasyCorp\Bundle\EasyAdminBundle\Context\AdminContext;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextEditorField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
@@ -60,21 +61,25 @@ class OrderCrudController extends AbstractCrudController
             //->add('index', 'detail');
     }
 
-    public function show(AdminContext $context, AdminUrlGenerator $adminUrlGenerator, Request $request) {
-        // $order = $context->getEntity()->getInstance(); //Bug easyAdmin 4.25 et symfony 7 mais fonctionne sur easyAdmin 4.1 sur symfony 6 !
-        
+    public function show(AdminContext $context, OrderRepository $orderRepository, AdminUrlGenerator $adminUrlGenerator, Request $request) {
+        //$order = $context->getEntity()->getInstance(); //Bug depuis Symfony 6.4 !
+        //TODO : Récupérer l'objet $order autrement ()entityId=18 correspond à l'Id 18 de la table 'Order'
+        $orderId = $request->query->get('entityId');
+        //Requeter avec l'id commande
+        $order = $orderRepository->findOneById($orderId);
+
         // // Récupérer l'URL de notre action "show"
-        // $url = $adminUrlGenerator->setController(self::class)->setAction('show')->setEntityId($order->getId())->generateUrl();
+        $url = $adminUrlGenerator->setController(self::class)->setAction('show')->setEntityId($order->getId())->generateUrl();
 
-        // // Traitement des changement de statut
-        // if ($request->get('state')) {
-        //     $this->changeState($order, $request->get('state'));
-        // }
+        // Traitement des changement de statut
+        if ($request->get('state')) {
+           $this->changeState($order, $request->get('state'));
+        }
 
-        // return $this->render('admin/order.html.twig', [
-        //     'order' => $order,
-        //     'current_url' => $url
-        // ]);
+        return $this->render('admin/order.html.twig', [
+             'order' => $order,
+             'current_url' => $url
+        ]);
     }
 
     /*
